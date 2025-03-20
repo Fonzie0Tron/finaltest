@@ -16,7 +16,7 @@ export default function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
   const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
+    (_state: unknown, formData: FormData) => authenticate(formData),
     undefined,
   );
 
