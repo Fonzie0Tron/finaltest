@@ -7,6 +7,8 @@ import postgres from 'postgres';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 
+// Connect to the database
+
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: { rejectUnauthorized: false } });
  
 const FormSchema = z.object({
