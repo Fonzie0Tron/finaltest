@@ -34,7 +34,7 @@ export type State = {
   message?: string | null;
 };
  
-export async function createInvoice(prevState: State, formData: FormData) {
+export async function createInvoice(_prevState: State, formData: FormData) {
   // Validate form using Zod
   const validatedFields = CreateInvoice.safeParse({
     customerId: formData.get('customerId'),
@@ -77,7 +77,7 @@ const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
 export async function updateInvoice(
   id: string,
-  prevState: State,
+  _prevState: State,
   formData: FormData,
 ) {
   const validatedFields = UpdateInvoice.safeParse({
@@ -112,13 +112,11 @@ export async function updateInvoice(
 
 
 export async function deleteInvoice(id: string) {
-  throw new Error('Failed to Delete Invoice');
   await sql`DELETE FROM invoices WHERE id = ${id}`;
   revalidatePath('/dashboard/invoices');
 }
 
 export async function authenticate(
-  prevState: string | undefined,
   formData: FormData,
 ) {
   try {
