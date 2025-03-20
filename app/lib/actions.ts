@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath } from 'next/dist/server/web/spec-extension/revalidate';
 import { redirect } from 'next/navigation';
 import postgres from 'postgres';
 import { signIn } from '@/auth';
@@ -61,7 +61,7 @@ export async function createInvoice(_prevState: State, formData: FormData) {
       INSERT INTO invoices (customer_id, amount, status, date)
       VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
-  } catch (error) {
+  } catch {
     // If a database error occurs, return a more specific error.
     return {
       message: 'Database Error: Failed to Create Invoice.',
@@ -102,7 +102,7 @@ export async function updateInvoice(
       SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
       WHERE id = ${id}
     `;
-  } catch (error) {
+  } catch {
     return { message: 'Database Error: Failed to Update Invoice.' };
   }
  
